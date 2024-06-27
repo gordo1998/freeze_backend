@@ -47,6 +47,7 @@ public class ProductosEscaneadosImpD implements ProductosEscaneadosIntD{
 		
 	}
 	
+	
 	public int returnProductScanner(String codigo_barra) {
 		try(Connection connection = ConnectionMySQL.getConnection();
 			PreparedStatement statement = connection.prepareStatement(UtilsRequests.EXISTPRODUCT)){

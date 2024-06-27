@@ -27,7 +27,7 @@ public class UtilsRequests {
 	
 	//SENTENCIAS PARA LA TABLA DE PRODUCTOS COMPRADOS
 	public static final String ANY_PRODUCT_COMPRADOS = "select count(*) from productos_comprados inner join productos_escaneados on productos_comprados.producto = productos_escaneados.id where codigo_barra = ? and usuario = ?";
-	public static final String EXIST_PRODUCT_COMPRADOS = "select codigo_barra, productos_escaneados.id from productos_comprados inner join productos_escaneados on productos_comprados.producto = productos_escaneados.id where codigo_barra = ?";
+	public static final String EXIST_PRODUCT_COMPRADOS = "select codigo_barra, productos_escaneados.id from productos_comprados inner join productos_escaneados on productos_comprados.producto = productos_escaneados.id where codigo_barra = ? and usuario";
 	public static final String CANTIDAD_PRODUCTO_COMPRADOS = "Select cantidad from productos_comprados where usuario = ? and producto = ?";
 	public static final String INSERT_PRODUCT_COMPRADOS = "Insert into productos_comprados (cantidad, usuario, producto) values (?, ?, ?)";
 	public static final String UPDATE_PRODUCT_COMPRADOS = "Update productos_comprados set cantidad = ? where producto = ? and usuario = ?";

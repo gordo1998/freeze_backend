@@ -1,5 +1,6 @@
 package dao;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,7 +16,7 @@ import utils.UtilsRequests;
 public class ProductosCompradosImpD implements ProductosCompradosIntD{
 	
 	@Override
-	public int anyProductComprados(String codigobarra, int usuario) {
+	public int anyProductComprado(String codigobarra, int usuario) {
 		try(Connection connection = ConnectionMySQL.getConnection();
 			PreparedStatement statement = connection.prepareStatement(UtilsRequests.ANY_PRODUCT_COMPRADOS);){
 			
@@ -24,15 +25,19 @@ public class ProductosCompradosImpD implements ProductosCompradosIntD{
 			
 			ResultSet result = statement.executeQuery();
 			
-			return result.getInt(1);
-		} catch(SQLException e){
+			if (result.next()) {
+				return result.getInt(1);
+			}else {
+				throw new IOException();
+			}
+		} catch(SQLException | IOException e){
 			e.printStackTrace();
 			return -1;
 		}
 	}
 
 	@Override
-	public void newProductInventario(int cantidad, int usuario, int producto) {
+	public void newProductComprado(int cantidad, int usuario, int producto) {
 		try(Connection connection = ConnectionMySQL.getConnection();
 			PreparedStatement statement = connection.prepareStatement(UtilsRequests.INSERT_PRODUCT_COMPRADOS)){
 			
@@ -46,15 +51,36 @@ public class ProductosCompradosImpD implements ProductosCompradosIntD{
 			e.printStackTrace();
 		}
 	}
+	
+	public int cantidadProductComprado(int usuario, int producto) {
+		try(Connection connection = ConnectionMySQL.getConnection();
+			PreparedStatement statement = connection.prepareStatement(UtilsRequests.CANTIDAD_PRODUCTO_COMPRADOS)){
+			
+			statement.setInt(1, usuario);
+			statement.setInt(2, producto);
+			
+			ResultSet result = statement.executeQuery();
+			
+			if(result.next()) {
+				return result.getInt(1);
+			}else {
+				throw new IOException();
+			}
+			
+		}catch(SQLException | IOException e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
 
 	@Override
-	public void updateProductInventario(int cantidad, int usuario, int producto) {
+	public void updateProductComprado(int cantidad, int usuario, int producto) {
 		try(Connection connection = ConnectionMySQL.getConnection();
 			PreparedStatement statement = connection.prepareStatement(UtilsRequests.UPDATE_PRODUCT_COMPRADOS)){
 			
 			statement.setInt(1, cantidad);
-			statement.setInt(2, usuario);
-			statement.setInt(3, producto);
+			statement.setInt(2, producto);
+			statement.setInt(3, usuario);
 			
 			statement.executeUpdate();
 				
