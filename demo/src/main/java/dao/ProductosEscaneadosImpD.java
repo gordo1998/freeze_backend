@@ -1,5 +1,6 @@
 package dao;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -45,5 +46,24 @@ public class ProductosEscaneadosImpD implements ProductosEscaneadosIntD{
 		}
 		
 	}
+	
+	public int returnProductScanner(String codigo_barra) {
+		try(Connection connection = ConnectionMySQL.getConnection();
+			PreparedStatement statement = connection.prepareStatement(UtilsRequests.EXISTPRODUCT)){
+			
+			statement.setString(1, codigo_barra);
+			ResultSet result = statement.executeQuery();
+			if(result.next()) {
+				return result.getInt(1);
+			}else {
+				throw new IOException();
+			}
+			
+		}catch(SQLException | IOException e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+	
 
 }

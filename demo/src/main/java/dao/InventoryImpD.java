@@ -17,7 +17,7 @@ import utils.UtilsRequests;
 
 @Repository
 public class InventoryImpD implements InventoryIntD {
-
+	//DEVUELVE LA CANTIDAD DE UN PRODUCTO ESPECIFICADO, DEBE DEVOLVER 1 O 0
 	@Override
 	public int anyProductInventario(String codigoBarra, int usuario) {
 		try(Connection connection = ConnectionMySQL.getConnection();
@@ -38,16 +38,17 @@ public class InventoryImpD implements InventoryIntD {
 		}
 	}
 	
-	//DEVUELVE UN MAP QUE CONTIENE EL CODIGO DE ESTADO Y UN RESULTSET. EL RESULTSET CONTIENE EL CODIGO DE BARRA
-	// Y EL ID PRODUCTO
+	//DEVUELVE UN MAP QUE CONTIENE EL CODIGO DE ESTADO Y EL ID EL PRODUCTO. 
+	//SI EL PRODUCTO NO EXISTE EN EL INVENTARIO DARÁ UN ERROR.
 	@Override
-	public Map<String, Object> getProduct(String codigoBarra) {
+	public Map<String, Object> getProduct(String codigoBarra, int usuario) {
 		Map<String, Object> mapResult = new HashMap<>();
 		
 		try(Connection connection = ConnectionMySQL.getConnection();
 			PreparedStatement statement = connection.prepareStatement(UtilsRequests.EXIST_PRODUCT_INVENTARIO);){
 			
 			statement.setString(1, codigoBarra);
+			statement.setInt(2, usuario);
 			
 			ResultSet result = statement.executeQuery();
 			Map<String, Object> resultado = new HashMap<>();
@@ -70,7 +71,8 @@ public class InventoryImpD implements InventoryIntD {
 		}
 		return mapResult;
 	}
-
+	
+	//DEVUELVE LA CANTIDAD DE UN PRODUCTO
 	@Override
 	public int cantidadProductInventario(int usuario, int producto) {
 		try(Connection connection = ConnectionMySQL.getConnection();
@@ -88,7 +90,9 @@ public class InventoryImpD implements InventoryIntD {
 			return -1;
 		}
 	}
-
+	
+	//INSERTA UN NUEVO PRODUCTO. SE LE HA DE PASAR LA CANTIDAD, EL ID DE UDUARIO
+	// Y EL ID DEL PRODUCTO.
 	@Override
 	public void newProductInventario(int cantidad, int usuario, int producto) {
 		try(Connection connection = ConnectionMySQL.getConnection();
@@ -105,14 +109,16 @@ public class InventoryImpD implements InventoryIntD {
 		}
 	}
 
+	//ATCUALIZA LAS CANTIDADES DE UN PRODUCTO QUE YA EXISTE EN EL INVENTARIO.
+	//SE LE HA DE PASAR EL ID DE USUARIO Y EL ID DEL PRODUCTO.
 	@Override
 	public void updateProductInventario(int cantidad, int usuario, int producto) {
 		try(Connection connection = ConnectionMySQL.getConnection();
 			PreparedStatement statement = connection.prepareStatement(UtilsRequests.UPDATE_PRODUCT_INVENTARIO)){
 			
 			statement.setInt(1, cantidad);
-			statement.setInt(2, usuario);
-			statement.setInt(3, producto);
+			statement.setInt(2, producto);
+			statement.setInt(3, usuario);
 			
 			statement.executeUpdate();
 				
@@ -121,6 +127,10 @@ public class InventoryImpD implements InventoryIntD {
 		}
 	}
 
+	//DEVUELVE UN MAPA QUE CONTIENE UNA LISTA DE PRODUCTOS CON EL CODIGO 
+	//DE BARRA Y CONTIENE EL ID DEL 
+	//PRODUCTO MÁS EL NOMBRE, MÁS LAS CANTIDADES.
+	//SI LOS PRODUCTOS NO EXISTEN EN EL INVENTARIO DARÁ ERROR.
 	@Override
 	public Map<String, Object> getProducts(int usuario) {
 		Map<String, Object> mapResult = new HashMap<>();
@@ -156,20 +166,6 @@ public class InventoryImpD implements InventoryIntD {
 		return mapResult;
 	}
 	
-	@Override
-	public void deleteProduct(int producto, int usuario) {
-		try(Connection connection = ConnectionMySQL.getConnection();
-			PreparedStatement statement = connection.prepareStatement(UtilsRequests.DELETE_PRODUCT_INVENTARIO)){
-			
-			statement.setInt(1, producto);
-			statement.setInt(2, usuario);
-			
-			statement.executeQuery();
-			
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}
-	}
 
 	@Override
 	public void deleteProducts(List<Integer> productos, int usuario) {
@@ -179,6 +175,8 @@ public class InventoryImpD implements InventoryIntD {
 				
 				statement.setInt(1, producto);
 				statement.setInt(2, usuario);
+				
+				statement.executeUpdate();
 				
 			}catch(SQLException e) {
 				e.printStackTrace();

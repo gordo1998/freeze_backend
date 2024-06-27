@@ -8,11 +8,11 @@ public class UtilsRequests {
 	
 	//SENTENCIAS PARA LA TABLA DE INVENTARIO
 	public static final String ANY_PRODUCT_INVENTARIO = "select count(*) from inventario inner join productos_escaneados on inventario.producto = productos_escaneados.id where codigo_barra = ? and usuario = ?";
-	public static final String EXIST_PRODUCT_INVENTARIO = "select codigo_barra, productos_escaneados.id from inventario inner join productos_escaneados on inventario.producto = productos_escaneados.id where codigo_barra = ?";
+	public static final String EXIST_PRODUCT_INVENTARIO = "select codigo_barra, productos_escaneados.id from inventario inner join productos_escaneados on inventario.producto = productos_escaneados.id where codigo_barra = ? and usuario = ?";
 	public static final String CANTIDAD_PRODUCTO_INVENTARIO = "Select cantidad from inventario where usuario = ? and producto = ?";
 	public static final String INSERT_PRODUCT_INVENTARIO = "Insert into inventario (cantidad, usuario, producto) values (?, ?, ?)";
 	public static final String UPDATE_PRODUCT_INVENTARIO = "Update inventario set cantidad = ? where producto = ? and usuario = ?";
-	public static final String DELETE_PRODUCT_INVENTARIO = "Delete froma inventario where producto = ? and usuario = ?";
+	public static final String DELETE_PRODUCT_INVENTARIO = "Delete from inventario where producto = ? and usuario = ?";
 	public static final String SELECT_ALL_PRODUCT_INVENTARIO = "select * from inventario inner join productos_escaneados on inventario.producto = productos_escaneados.id where usuario = ?";
 	
 	//SENTENCIAS PARA LA TABLA DE LISTA DE LA COMPRA
@@ -21,7 +21,7 @@ public class UtilsRequests {
 	public static final String CANTIDAD_PRODUCTO_LISTA_COMPRA = "Select cantidad from lista_compra where usuario = ? and producto = ?";
 	public static final String INSERT_PRODUCT_LISTA_COMPRA = "Insert into lista_compra (cantidad, usuario, producto) values (?, ?, ?)";
 	public static final String UPDATE_PRODUCT_LISTA_COMPRA = "Update lista_compra set cantidad = ? where producto = ? and usuario = ?";
-	public static final String DELETE_PRODUCT_LISTA_COMPRA = "Delete froma lista_compra where producto = ? and usuario = ?";
+	public static final String DELETE_PRODUCT_LISTA_COMPRA = "Delete from lista_compra where producto = ? and usuario = ?";
 	public static final String SELECT_ALL_PRODUCT_LISTA = "select * from lista_compra inner join productos_escaneados on lista_compra.producto = productos_escaneados.id where usuario = ?";
 
 	
