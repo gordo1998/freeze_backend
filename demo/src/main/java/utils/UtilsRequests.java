@@ -17,7 +17,7 @@ public class UtilsRequests {
 	
 	//SENTENCIAS PARA LA TABLA DE LISTA DE LA COMPRA
 	public static final String ANY_PRODUCT_LISTA_COMPRA = "select count(*) from lista_compra inner join productos_escaneados on lista_compra.producto = productos_escaneados.id where codigo_barra = ? and usuario = ?";
-	public static final String EXIST_PRODUCT_LISTA_COMPRA = "select codigo_barra from lista_compra inner join productos_escaneados on lista_compra.producto = productos_escaneados.id where codigo_barra = ?";
+	public static final String EXIST_PRODUCT_LISTA_COMPRA = "select codigo_barra, productos_escaneados.id from lista_compra inner join productos_escaneados on lista_compra.producto = productos_escaneados.id where codigo_barra = ? and usuario = ?";
 	public static final String CANTIDAD_PRODUCTO_LISTA_COMPRA = "Select cantidad from lista_compra where usuario = ? and producto = ?";
 	public static final String INSERT_PRODUCT_LISTA_COMPRA = "Insert into lista_compra (cantidad, usuario, producto) values (?, ?, ?)";
 	public static final String UPDATE_PRODUCT_LISTA_COMPRA = "Update lista_compra set cantidad = ? where producto = ? and usuario = ?";
@@ -27,7 +27,7 @@ public class UtilsRequests {
 	
 	//SENTENCIAS PARA LA TABLA DE PRODUCTOS COMPRADOS
 	public static final String ANY_PRODUCT_COMPRADOS = "select count(*) from productos_comprados inner join productos_escaneados on productos_comprados.producto = productos_escaneados.id where codigo_barra = ? and usuario = ?";
-	public static final String EXIST_PRODUCT_COMPRADOS = "select codigo_barra from productos_comprados inner join productos_escaneados on productos_comprados.producto = productos_escaneados.id where codigo_barra = ?";
+	public static final String EXIST_PRODUCT_COMPRADOS = "select codigo_barra, productos_escaneados.id from productos_comprados inner join productos_escaneados on productos_comprados.producto = productos_escaneados.id where codigo_barra = ?";
 	public static final String CANTIDAD_PRODUCTO_COMPRADOS = "Select cantidad from productos_comprados where usuario = ? and producto = ?";
 	public static final String INSERT_PRODUCT_COMPRADOS = "Insert into productos_comprados (cantidad, usuario, producto) values (?, ?, ?)";
 	public static final String UPDATE_PRODUCT_COMPRADOS = "Update productos_comprados set cantidad = ? where producto = ? and usuario = ?";

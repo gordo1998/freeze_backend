@@ -3,10 +3,13 @@ package service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Service;
+
 import controller.InventarioC;
 import dao.InventoryImpD;
 import dao.ProductosEscaneadosImpD;
 
+@Service
 public class InventoryImpS implements InventoryIntS{
 	InventoryImpD inventario = new InventoryImpD();
 	ProductosEscaneadosImpD escaner = new ProductosEscaneadosImpD();

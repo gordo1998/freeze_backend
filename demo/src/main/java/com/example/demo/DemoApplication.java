@@ -12,7 +12,8 @@ import dao.UsersImpD;
 import service.InventoryImpS;
 import service.UsersImpS;
 
-@ComponentScan(basePackages = {"controller"})
+@ComponentScan(basePackages = {"controller", "dao", "service"})
+
 @SpringBootApplication
 public class DemoApplication {
 
