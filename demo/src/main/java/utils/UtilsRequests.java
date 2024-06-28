@@ -33,7 +33,8 @@ public class UtilsRequests {
 	public static final String UPDATE_PRODUCT_COMPRADOS = "Update productos_comprados set cantidad = ? where producto = ? and usuario = ?";
 	
 	//SENTENCIAS PARA LA TABLA DE PRODUCTOS ESCANEADOS
-	public static final String EXISTPRODUCT = "Select * from productos_escaneados where codigo_barra = ?";//Para validar que exista el producto
+	public static final String EXISTPRODUCT = "Select count(*) from productos_escaneados where codigo_barra = ?";//Para validar que exista el producto
+	public static final String IDPRODUCTSCANNER = "Select * from productos_escaneados where codigo_barra = ?";
 	public static final String NEWPRODUCT = "Insert into productos_escaneados (codigo_barra, nombre) values(?, ?)";//Si no existe se inserta
 	
 }

@@ -22,10 +22,12 @@ public class ProductosEscaneadosImpD implements ProductosEscaneadosIntD{
 			statement.setString(1, codigoBarra);
 			
 			ResultSet result = statement.executeQuery();
-			
-			return result.getInt(1);
-			
-		}catch(SQLException e) {
+			if (result.next()) {
+				return result.getInt(1);
+			}else {
+				throw new IOException();
+			}
+		}catch(SQLException | IOException e) {
 			e.printStackTrace();
 			return -1;
 		}
@@ -50,7 +52,7 @@ public class ProductosEscaneadosImpD implements ProductosEscaneadosIntD{
 	
 	public int returnProductScanner(String codigo_barra) {
 		try(Connection connection = ConnectionMySQL.getConnection();
-			PreparedStatement statement = connection.prepareStatement(UtilsRequests.EXISTPRODUCT)){
+			PreparedStatement statement = connection.prepareStatement(UtilsRequests.IDPRODUCTSCANNER)){
 			
 			statement.setString(1, codigo_barra);
 			ResultSet result = statement.executeQuery();
